@@ -20,7 +20,7 @@ function BasicExample() {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasic">
           <Form.Control
             type="text"
             placeholder="Ingresa una tarea"
