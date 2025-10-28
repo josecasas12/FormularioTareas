@@ -8,7 +8,12 @@ function App() {
 
   return (
     <>
-      <h1>hola mundo</h1>
+    <main className='container py-5'>
+      <h1 className='text-light'>Bienvenidos</h1>
+
+
+   
+    </main>
     </>
   )
 }
