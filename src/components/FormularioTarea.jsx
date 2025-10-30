@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import ListaTareas from "./ListaTareas";
 import { useState } from "react";
 
-function BasicExample() {
+function FormularioTareas() {
   const [tarea, setTarea] = useState("");
   const [tareas, setTareas] = useState([]);
 
@@ -12,7 +12,7 @@ function BasicExample() {
     const nuevaTarea = tarea.trim();
     if (nuevaTarea === "") return;
 
-    //  Comparar sin importar mayúsculas/minúsculas
+    // Comparar sin importar mayúsculas/minúsculas
     const tareaExistente = tareas.find(
       (t) => t.toLowerCase() === nuevaTarea.toLowerCase()
     );
@@ -23,6 +23,11 @@ function BasicExample() {
 
     setTareas([...tareas, nuevaTarea]);
     setTarea("");
+  };
+
+  // ✅ Nueva función para borrar una tarea
+  const borrarTarea = (tareaAEliminar) => {
+    setTareas(tareas.filter((t) => t !== tareaAEliminar));
   };
 
   return (
@@ -45,9 +50,10 @@ function BasicExample() {
         </Button>
       </Form>
 
-      <ListaTareas tareas={tareas} />
+      {/*  Pasamos la función borrarTarea como prop */}
+      <ListaTareas tareas={tareas} borrarTarea={borrarTarea} />
     </>
   );
 }
 
-export default BasicExample;
+export default FormularioTareas;
