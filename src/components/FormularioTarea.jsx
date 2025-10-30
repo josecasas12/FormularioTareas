@@ -1,18 +1,27 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ListaTareas from "./ListaTareas";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function FormularioTareas() {
   const [tarea, setTarea] = useState("");
-  const [tareas, setTareas] = useState([]);
+
+  //  Leer tareas desde localStorage una vez
+  const [tareas, setTareas] = useState(() => {
+    const stored = localStorage.getItem("tareas");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  //  Guardar tareas en localStorage cada vez que cambian
+  useEffect(() => {
+    localStorage.setItem("tareas", JSON.stringify(tareas));
+  }, [tareas]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const nuevaTarea = tarea.trim();
     if (nuevaTarea === "") return;
 
-    // Comparar sin importar mayúsculas/minúsculas
     const tareaExistente = tareas.find(
       (t) => t.toLowerCase() === nuevaTarea.toLowerCase()
     );
@@ -25,7 +34,6 @@ function FormularioTareas() {
     setTarea("");
   };
 
-  // ✅ Nueva función para borrar una tarea
   const borrarTarea = (tareaAEliminar) => {
     setTareas(tareas.filter((t) => t !== tareaAEliminar));
   };
@@ -50,7 +58,6 @@ function FormularioTareas() {
         </Button>
       </Form>
 
-      {/*  Pasamos la función borrarTarea como prop */}
       <ListaTareas tareas={tareas} borrarTarea={borrarTarea} />
     </>
   );
