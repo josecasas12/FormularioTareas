@@ -4,17 +4,25 @@ import ListaTareas from "./ListaTareas";
 import { useState } from "react";
 
 function BasicExample() {
-  // Estado para manejar el texto y la lista
   const [tarea, setTarea] = useState("");
   const [tareas, setTareas] = useState([]);
 
-  // Maneja el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (tarea.trim() === "") return;
+    const nuevaTarea = tarea.trim();
+    if (nuevaTarea === "") return;
 
-    setTareas([...tareas, tarea]); // agrega la nueva tarea
-    setTarea(""); // limpia el input
+    //  Comparar sin importar mayúsculas/minúsculas
+    const tareaExistente = tareas.find(
+      (t) => t.toLowerCase() === nuevaTarea.toLowerCase()
+    );
+    if (tareaExistente) {
+      alert("Esa tarea ya existe.");
+      return;
+    }
+
+    setTareas([...tareas, nuevaTarea]);
+    setTarea("");
   };
 
   return (
@@ -37,7 +45,6 @@ function BasicExample() {
         </Button>
       </Form>
 
-      {/* 👇 Pasamos la lista actual de tareas como props */}
       <ListaTareas tareas={tareas} />
     </>
   );
